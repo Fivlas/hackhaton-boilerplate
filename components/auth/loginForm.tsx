@@ -55,6 +55,7 @@ export function LoginForm({
     };
 
     const handleFacebookClick = () => {
+        await auth
     };
 
     const handleGoogleClick = () => {
