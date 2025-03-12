@@ -55,7 +55,7 @@ export function LoginForm({
     };
 
     const handleFacebookClick = () => {
-        await auth
+        axios.get("")
     };
 
     const handleGoogleClick = () => {
