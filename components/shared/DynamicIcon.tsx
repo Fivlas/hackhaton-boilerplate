@@ -3,7 +3,7 @@ import dynamicIconImports from "lucide-react/dynamicIconImports";
 import dynamic from "next/dynamic";
 import { FC, memo } from "react";
 
-type IconName = keyof typeof dynamicIconImports;
+export type IconName = keyof typeof dynamicIconImports;
 
 const icons = Object.keys(dynamicIconImports) as IconName[];
 
