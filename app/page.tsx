@@ -1,3 +1,4 @@
+import Hero from "@/components/landing/Hero";
 import Image from "next/image";
 
 export default function Home() {
@@ -49,6 +50,9 @@ export default function Home() {
           </a>
         </div>
       </main>
+      <div className="mt-[6000px]">
+wq
+      </div>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a
           className="flex items-center gap-2 hover:underline hover:underline-offset-4"
