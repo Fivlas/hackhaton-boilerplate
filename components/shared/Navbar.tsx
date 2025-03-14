@@ -96,7 +96,7 @@ const Navbar = () => {
             <div className="relative">
                 <div className="flex items-center gap-2">
                     <Link
-                        href={"/"}
+                        href={"/dashboard"}
                         className="flex items-center justify-center bg-[#ab9ff2] text-[#1c1c1c] gap-2.5 rounded-4xl py-4 px-8 transition-all hover:bg-[#e2dffe] text-sm md:text-base duration-200 hover:scale-95"
                     >
                         Dashboard
