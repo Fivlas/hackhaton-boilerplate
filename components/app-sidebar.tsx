@@ -170,10 +170,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   // const session = useSession()!;
 
   // const navUser = {
-  //   name: session.name,
-  //   email: session.email,
-  //   avatar: session.image as string,
+    // name: session.name,
+    // email: session.email,
+    // avatar: session.image as string,
   // }
+
+
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>

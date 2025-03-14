@@ -30,7 +30,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.className} antialiased bg-[#f5f2ff]`}
+        // className={`${inter.className} antialiased bg-[#f5f2ff]`}
+        className={`antialiased bg-[#f5f2ff]`}
       >
         {children}
       </body>
