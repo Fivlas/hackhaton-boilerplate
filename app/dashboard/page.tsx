@@ -132,7 +132,7 @@ const page = () => {
                                     <Line
                                         type="monotone"
                                         dataKey="value"
-                                        // stroke="oklch(var(--primary))"
+                                        stroke="var(--primary)"
                                         strokeWidth={2}
                                     />
                                 </LineChart>
@@ -156,7 +156,7 @@ const page = () => {
                                     <Tooltip />
                                     <Bar
                                         dataKey="users"
-                                        // fill="hsl(var(--primary))"
+                                        stroke="var(--primary)"
                                         radius={[4, 4, 0, 0]}
                                     />
                                 </BarChart>
