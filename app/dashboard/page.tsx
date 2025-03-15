@@ -1,5 +1,11 @@
 "use client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+    ChartConfig,
+    ChartContainer,
+    ChartTooltip,
+    ChartTooltipContent,
+} from "@/components/ui/chart";
 import { Tooltip } from "@/components/ui/tooltip";
 import { ArrowDownRight, ArrowUpRight, User } from "lucide-react";
 import React from "react";
@@ -9,28 +15,44 @@ import {
     CartesianGrid,
     Line,
     LineChart,
-    ResponsiveContainer,
     XAxis,
     YAxis,
 } from "recharts";
 
-const data = [
-    { name: "Jan", value: 400 },
-    { name: "Feb", value: 300 },
-    { name: "Mar", value: 600 },
-    { name: "Apr", value: 800 },
-    { name: "May", value: 700 },
-    { name: "Jun", value: 900 },
+const lineChartConfig = {
+    desktop: {
+        label: "Desktop",
+        color: "var(--primary)",
+    },
+} satisfies ChartConfig;
+
+const barChartConfig = {
+    desktop: {
+        label: "Desktop",
+        color: "var(--primary)",
+    },
+    mobile: {
+        label: "Mobile",
+        color: "var(--secondary)",
+    },
+} satisfies ChartConfig;
+
+const lineChartData = [
+    { month: "January", desktop: 186 },
+    { month: "February", desktop: 305 },
+    { month: "March", desktop: 237 },
+    { month: "April", desktop: 73 },
+    { month: "May", desktop: 209 },
+    { month: "June", desktop: 214 },
 ];
 
-const barData = [
-    { name: "Mon", users: 20 },
-    { name: "Tue", users: 40 },
-    { name: "Wed", users: 30 },
-    { name: "Thu", users: 50 },
-    { name: "Fri", users: 45 },
-    { name: "Sat", users: 25 },
-    { name: "Sun", users: 35 },
+const barChartData = [
+    { month: "January", desktop: 186, mobile: 80 },
+    { month: "February", desktop: 305, mobile: 200 },
+    { month: "March", desktop: 237, mobile: 120 },
+    { month: "April", desktop: 73, mobile: 190 },
+    { month: "May", desktop: 209, mobile: 130 },
+    { month: "June", desktop: 214, mobile: 140 },
 ];
 
 const page = () => {
@@ -43,7 +65,6 @@ const page = () => {
                 </p>
             </div>
             <div className="flex flex-col md:flex-row gap-6 w-full">
-                {/* <Card className="animate-in fade-in zoom-in duration-500"> */}
                 <Card className="w-full">
                     <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                         <CardTitle className="text-sm font-medium">
@@ -121,53 +142,79 @@ const page = () => {
                     </CardContent>
                 </Card>
             </div>
-            <div className="flex flex-col md:flex-row gap-6 w-full">
-                {/* <Card className="animate-in slide-in-from-left duration-500"> */}
+
+            <div className="flex flex-col md:flex-row gap-6">
                 <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Revenue Over Time</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[400px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <LineChart data={data}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Line
-                                        type="monotone"
-                                        dataKey="value"
-                                        stroke="var(--primary)"
-                                        strokeWidth={2}
-                                    />
-                                </LineChart>
-                            </ResponsiveContainer>
-                        </div>
+                        <ChartContainer config={lineChartConfig}>
+                            <LineChart
+                                accessibilityLayer
+                                data={lineChartData}
+                                margin={{
+                                    left: 12,
+                                    right: 12,
+                                }}
+                            >
+                                <CartesianGrid vertical={false} />
+                                <XAxis
+                                    dataKey="month"
+                                    tickLine={false}
+                                    axisLine={false}
+                                    tickMargin={8}
+                                    tickFormatter={(value) => value.slice(0, 3)}
+                                />
+                                <ChartTooltip
+                                    cursor={false}
+                                    content={<ChartTooltipContent hideLabel />}
+                                />
+                                <Line
+                                    dataKey="desktop"
+                                    type="natural"
+                                    stroke="var(--color-desktop)"
+                                    strokeWidth={2}
+                                    dot={false}
+                                />
+                            </LineChart>
+                        </ChartContainer>
                     </CardContent>
                 </Card>
 
-                {/* <Card className="animate-in slide-in-from-right duration-500"> */}
                 <Card className="w-full">
                     <CardHeader>
                         <CardTitle>Daily Active Users</CardTitle>
                     </CardHeader>
                     <CardContent>
-                        <div className="h-[400px]">
-                            <ResponsiveContainer width="100%" height="100%">
-                                <BarChart data={barData}>
-                                    <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                    <Tooltip />
-                                    <Bar
-                                        dataKey="users"
-                                        stroke="var(--primary)"
-                                        radius={[4, 4, 0, 0]}
-                                    />
-                                </BarChart>
-                            </ResponsiveContainer>
-                        </div>
+                        <ChartContainer config={barChartConfig}>
+                            <BarChart accessibilityLayer data={barChartData}>
+                                <CartesianGrid vertical={false} />
+                                <XAxis
+                                    dataKey="month"
+                                    tickLine={false}
+                                    tickMargin={10}
+                                    axisLine={false}
+                                    tickFormatter={(value) => value.slice(0, 3)}
+                                />
+                                <ChartTooltip
+                                    cursor={false}
+                                    content={
+                                        <ChartTooltipContent indicator="dashed" />
+                                    }
+                                />
+                                <Bar
+                                    dataKey="desktop"
+                                    fill="var(--color-desktop)"
+                                    radius={4}
+                                />
+                                <Bar
+                                    dataKey="mobile"
+                                    fill="var(--color-mobile)"
+                                    radius={4}
+                                />
+                            </BarChart>
+                        </ChartContainer>
                     </CardContent>
                 </Card>
             </div>

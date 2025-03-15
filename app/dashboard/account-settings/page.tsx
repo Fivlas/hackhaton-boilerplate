@@ -9,10 +9,19 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
+import { authClient } from "@/lib/auth-client";
 import { UserCircle2 } from "lucide-react";
 import React from "react";
 
 const page = () => {
+
+    const handlePasswordChange = async () => {
+        // await authClient.changePassword({
+            // newPassword: newPassword,
+            // currentPassword: currentPassword,
+            // revokeOtherSessions: true,
+        // })
+    }
     return (
         <div className="flex flex-col space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
