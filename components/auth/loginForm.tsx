@@ -53,7 +53,17 @@ export function LoginForm({
             }, {
                 onError: (ctx) => {
                     if(ctx.error.status === 403) {
-                        toast("Please verify your email address")
+                        toast.warning("Please verify your email address", {
+                            action: {
+                                label: "Resend",
+                                onClick: async () => {
+                                    await authClient.sendVerificationEmail({
+                                        email: values.email,
+                                        callbackURL: "/"
+                                    })
+                                },
+                            },
+                        })
                     }
                 }
             });
