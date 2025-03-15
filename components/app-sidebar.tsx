@@ -5,7 +5,9 @@ import {
   BookOpen,
   Bot,
   Command,
+  CreditCard,
   Frame,
+  Key,
   LayoutDashboard,
   LifeBuoy,
   Map,
@@ -49,6 +51,16 @@ const data = {
       title: "Users",
       url: "/dashboard/users",
       icon: Users,
+    },
+    {
+      title: "API Keys",
+      url: "/dashboard/api-keys",
+      icon: Key,
+    },
+    {
+      title: "Billing",
+      url: "/dashboard/billing",
+      icon: CreditCard
     },
     {
       title: "Playground",
@@ -118,6 +130,11 @@ const data = {
     },
   ],
   navSecondary: [
+    {
+      title: "Settings",
+      url: "/dashboard/settings",
+      icon: Settings2,
+    },
     {
       title: "Support",
       url: "#",

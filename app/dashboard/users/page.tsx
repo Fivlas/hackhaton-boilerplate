@@ -44,6 +44,12 @@ const users = [
 const page = () => {
     return (
         <div className="space-y-4">
+            <div className="space-y-1">
+                <h2 className="text-2xl font-bold tracking-tight">API Keys</h2>
+                <p className="text-muted-foreground">
+                    Manage your API keys for development and production
+                </p>
+            </div>
             <div className="flex justify-between items-center">
                 <div className="relative w-64">
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -89,8 +95,14 @@ const page = () => {
                                     </TableRow>
                                 </ContextMenuTrigger>
                                 <ContextMenuContent>
-                                    <ContextMenuItem><SquarePen/>Edit</ContextMenuItem>
-                                    <ContextMenuItem><Trash/>Remove</ContextMenuItem>
+                                    <ContextMenuItem>
+                                        <SquarePen />
+                                        Edit
+                                    </ContextMenuItem>
+                                    <ContextMenuItem>
+                                        <Trash />
+                                        Remove
+                                    </ContextMenuItem>
                                 </ContextMenuContent>
                             </ContextMenu>
                         ))}

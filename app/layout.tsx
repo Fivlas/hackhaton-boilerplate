@@ -5,6 +5,7 @@ import Navbar from "@/components/shared/Navbar";
 import { Footer } from "@/components/ui/footer";
 import { Hexagon, Github, Twitter } from "lucide-react";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -41,6 +42,7 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     {children}
+                    <Toaster />
                 </ThemeProvider>
             </body>
         </html>
