@@ -1,3 +1,4 @@
+"use client"
 import { Button } from "@/components/ui/button";
 import {
     ContextMenu,
@@ -14,6 +15,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
+import { sendMail } from "@/lib/send-mail";
 import { Plus, Search, SquarePen, Trash } from "lucide-react";
 import React from "react";
 
@@ -56,7 +58,7 @@ const page = () => {
                     <Input placeholder="Search users..." className="pl-8" />
                 </div>
                 <Button>
-                    <Plus className="mr-2 h-4 w-4" />
+                    <Plus className="mr-2 h-4 w-4"/>
                     Add User
                 </Button>
             </div>
