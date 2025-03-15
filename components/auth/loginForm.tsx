@@ -27,12 +27,12 @@ import { useRouter } from "next/navigation";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useTransition } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function LoginForm({
     className,
     ...props
 }: React.ComponentPropsWithoutRef<"div">) {
-    const router = useRouter();
     const [isPending, startTransition] = useTransition();
 
     const form = useForm<LoginValues>({
@@ -50,12 +50,17 @@ export function LoginForm({
                 email:values.email,
                 password: values.password,
                 rememberMe: values.rememberMe,
+            }, {
+                onError: (ctx) => {
+                    if(ctx.error.status === 403) {
+                        toast("Please verify your email address")
+                    }
+                }
             });
         });
     };
 
     const handleFacebookClick = () => {
-        axios.get("")
     };
 
     const handleGoogleClick = () => {
