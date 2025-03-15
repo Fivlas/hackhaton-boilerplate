@@ -5,8 +5,8 @@ import { sendMail } from "./lib/send-mail";
 
 const prisma = new PrismaClient();
 export const auth = betterAuth({
-    emailAndPassword: {    
-        enabled: true
+    emailAndPassword: {
+        enabled: true,
     },
     database: prismaAdapter(prisma, {
         provider: "postgresql",
@@ -14,12 +14,19 @@ export const auth = betterAuth({
     emailVerification: {
         sendOnSignUp: true,
         autoSignInAfterVerification: true,
-        sendVerificationEmail: async ({ user, url, token }, request) => {
+        sendVerificationEmail: async ({ user, url, token }: { user: { email: string }; url: string; token: string; }, request: unknown ) => {
             await sendMail({
                 sendTo: user.email,
-                subject: 'Verify your email address',
-                text: `Click the link to verify your email: ${url}`
-            })
-        }
-    }
+                subject: "Verify your email address",
+                text: `Click the link to verify your email: ${url}`,
+            });
+        },
+        sendResetPassword: async ({ user, url, token }: { user: { email: string }; url: string; token: string; }, request: unknown ) => {
+            await sendMail({
+                sendTo: user.email,
+                subject: "Reset your password",
+                text: `Click the link to reset your password: ${url}`,
+            });
+        },
+    },
 });
