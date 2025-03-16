@@ -31,10 +31,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <body
-                // className={`${inter.className} antialiased bg-[#f5f2ff]`}
-                className={`antialiased bg-[#f5f2ff]`}
-            >
+            <body className={`${inter.className} antialiased bg-background`}>
                 <ThemeProvider
                     attribute="class"
                     defaultTheme="system"

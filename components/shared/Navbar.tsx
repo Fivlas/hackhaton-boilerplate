@@ -43,7 +43,7 @@ const Navbar = () => {
                         {menuItems.map((item, index) => (
                             <li
                                 key={index}
-                                className="relative transition-all duration-300 ease-in-out"
+                                className="relative transition-[transform,opacity] duration-300 ease-in-out not-dark:hover:text-muted"
                                 onMouseEnter={() => setActiveTab(index)}
                                 onMouseLeave={() => setActiveTab(null)}
                             >
@@ -75,7 +75,7 @@ const Navbar = () => {
                                 </Link>
                                 {activeTab === index && (
                                     <motion.div
-                                        className="absolute inset-0 bg-[#e2dffe] rounded-4xl -z-10"
+                                        className="absolute inset-0 bg-primary rounded-4xl -z-10"
                                         layoutId="hoverPill"
                                         animate={{ opacity: 1 }}
                                         exit={{ opacity: 0 }}
@@ -97,7 +97,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-2">
                     <Link
                         href={"/dashboard"}
-                        className="flex items-center justify-center bg-[#ab9ff2] text-[#1c1c1c] gap-2.5 rounded-4xl py-4 px-8 transition-all hover:bg-[#e2dffe] text-sm md:text-base duration-200 hover:scale-95"
+                        className="flex items-center justify-center shadow not-dark:text-muted bg-primary gap-2.5 rounded-4xl py-4 px-8 transition-all hover:opacity-80 text-sm md:text-base duration-200 hover:scale-95"
                     >
                         Dashboard
                     </Link>

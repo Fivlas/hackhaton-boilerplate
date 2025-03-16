@@ -1,5 +1,5 @@
 import { Pricing } from "@/components/blocks/pricing";
-import Hero from "@/components/landing/Hero";
+import { Hero } from "@/components/landing/Hero";
 import { CTA } from "@/components/ui/call-to-action";
 
 const demoPlans = [
@@ -63,10 +63,10 @@ const demoPlans = [
 
 export default function Home() {
   return (
-    <div className="container mx-auto">
-      <Hero/>
-      <Pricing plans={demoPlans} title="Pricing" description="desc"/>
-      <CTA />
-    </div>
+      <div className="container mx-auto">
+        <Hero/>
+        <Pricing plans={demoPlans} title="Pricing" description="desc"/>
+        <CTA />
+      </div>
   );
 }

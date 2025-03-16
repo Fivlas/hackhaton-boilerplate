@@ -1,12 +1,93 @@
-import React from 'react'
+"use client";
+import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import { MoveRight, PhoneCall, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-const Hero = () => {
+function Hero() {
+    const [titleNumber, setTitleNumber] = useState(0);
+    const titles = useMemo(
+        () => ["amazing", "new", "wonderful", "beautiful", "smart"],
+        []
+    );
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            if (titleNumber === titles.length - 1) {
+                setTitleNumber(0);
+            } else {
+                setTitleNumber(titleNumber + 1);
+            }
+        }, 2000);
+        return () => clearTimeout(timeoutId);
+    }, [titleNumber, titles]);
+
     return (
-        <div className='flex justify-center flex-col items-center text-center font-medium py-16'>
-            <h2 className='text-2xl mb-6 tracking-tight text-[#3C315B] opacity-80'>The crypto wallet that'll take you places</h2>
-            <h1 className='md:text-[150px] leading-[0.9] tracking-tight text-[#3C315B]'>Your trusted<br/>companion</h1>
+        <div className="w-full h-full">
+            <div className="flex gap-8 py-20 lg:pt-30 lg:pb-40 items-center justify-center flex-col">
+                <div>
+                    <div className="inline-flex items-center px-4 py-2 rounded-full bg-primary/80 text-muted dark:text-white">
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        <span className="text-sm font-medium">
+                            Hackhaton Edition {new Date().getFullYear()}
+                        </span>
+                    </div>
+                </div>
+                <div className="flex gap-4 flex-col">
+                    <h1 className="text-5xl md:text-7xl max-w-2xl tracking-tighter text-center font-regular">
+                        <span className="text-spektr-cyan-50">
+                            This is something
+                        </span>
+                        <span className="relative flex w-full justify-center overflow-hidden text-center md:pb-4 md:pt-1">
+                            &nbsp;
+                            {titles.map((title, index) => (
+                                <motion.span
+                                    key={index}
+                                    className="absolute font-semibold"
+                                    initial={{ opacity: 0, y: "-100" }}
+                                    transition={{
+                                        type: "spring",
+                                        stiffness: 50,
+                                    }}
+                                    animate={
+                                        titleNumber === index
+                                            ? {
+                                                  y: 0,
+                                                  opacity: 1,
+                                              }
+                                            : {
+                                                  y:
+                                                      titleNumber > index
+                                                          ? -150
+                                                          : 150,
+                                                  opacity: 0,
+                                              }
+                                    }
+                                >
+                                    {title}
+                                </motion.span>
+                            ))}
+                        </span>
+                    </h1>
+
+                    <p className="text-lg md:text-xl leading-relaxed tracking-tight text-muted-foreground max-w-2xl text-center">
+                        Managing a small business today is already tough. Avoid
+                        further complications by ditching outdated, tedious
+                        trade methods. Our goal is to streamline SMB trade,
+                        making it easier and faster than ever.
+                    </p>
+                </div>
+                <div className="flex flex-row gap-3">
+                    <Button size="lg" className="gap-4" variant="outline">
+                        Jump on a call <PhoneCall className="w-4 h-4" />
+                    </Button>
+                    <Button size="lg" className="gap-4">
+                        Sign up here <MoveRight className="w-4 h-4" />
+                    </Button>
+                </div>
+            </div>
         </div>
-    )
+    );
 }
 
-export default Hero
+export { Hero };

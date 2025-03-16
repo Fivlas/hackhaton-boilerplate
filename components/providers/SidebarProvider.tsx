@@ -1,6 +1,5 @@
 "use client"
 import React from "react";
-import { AppSidebar } from "../app-sidebar";
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "../ui/breadcrumb";
 import {
     SidebarInset,
@@ -9,6 +8,7 @@ import {
 } from "@/components/ui/sidebar";
 import { Separator } from "../ui/separator";
 import { usePathname } from "next/navigation";
+import { AppSidebar } from "../sidebar/app-sidebar";
 
 const SidebarProvider = ({ children }: { children: React.ReactNode }) => {
     const pathname = usePathname();
