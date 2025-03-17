@@ -3,6 +3,7 @@ import { prismaAdapter } from "better-auth/adapters/prisma";
 import { PrismaClient } from "@prisma/client";
 import { sendMail } from "./lib/send-mail";
 import { nextCookies } from "better-auth/next-js";
+import { emailHarmony } from 'better-auth-harmony'
 
 const prisma = new PrismaClient();
 export const auth = betterAuth({
@@ -11,6 +12,7 @@ export const auth = betterAuth({
     }),
     plugins: [
         nextCookies(),
+        emailHarmony(),
     ],
     session: {
         cookieCache: {

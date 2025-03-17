@@ -24,7 +24,10 @@ model User {
   sessions      Session[]
   accounts      Account[]
 
+  normalizedEmail String?
+
   @@map("user")
+  @@unique([normalizedEmail])
 }
 
 model Session {
