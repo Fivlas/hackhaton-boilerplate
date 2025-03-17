@@ -29,10 +29,9 @@ const page = () => {
                     returnUrl: "/dashboard/billing",
                 });
             if (error) {
-                toast.error(error.message);
-            } else {
-                toast.success("You have successfully subscribed to the Pro plan");
-            }
+                return toast.error(error.message);
+            } 
+            toast.success("You have successfully subscribed to the Pro plan");
         } catch (error) {
             console.error("Error:", error);
         } finally {
@@ -46,11 +45,10 @@ const page = () => {
                 returnUrl: "/dashboard/billing"
             });
             if (error) {
-                toast.error(error.message);
-            } else {
-                toast.success("Your subscription has been cancelled");
-                setActivePlan(null);
+                return toast.error(error.message);
             }
+            toast.success("Your subscription has been cancelled");
+            setActivePlan(null);
         } catch (error) {
             console.error("Error cancelling subscription:", error);
             toast.error("Failed to cancel subscription");
