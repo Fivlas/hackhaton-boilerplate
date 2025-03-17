@@ -5,7 +5,7 @@ import { sendMail } from "./lib/send-mail";
 import { nextCookies } from "better-auth/next-js";
 import { emailHarmony } from 'better-auth-harmony'
 import { stripe } from "@better-auth/stripe"
-import { customSession } from "better-auth/plugins"
+import { plans } from "@/constants/stripe/plans"
 import Stripe from "stripe"
 
 const prisma = new PrismaClient();
@@ -24,19 +24,8 @@ export const auth = betterAuth({
             createCustomerOnSignUp: true,
             subscription: {
                 enabled: true,
-                plans: []
+                plans: plans
             },
-            // onCustomerCreate: async ({ customer, stripeCustomer, user }, request) => {
-            //     console.log(`Customer ${customer.id} created for user ${user.id}`);
-            // },
-            // getCustomerCreateParams: async ({ user, session }, request) => {
-            //     // Customize the Stripe customer creation parameters
-            //     return {
-            //         metadata: {
-            //             referralSource: user.metadata?.referralSource
-            //         }
-            //     };
-            // }
         })
     ],
     session: {

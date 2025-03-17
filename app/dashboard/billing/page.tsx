@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -8,85 +8,70 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card";
+import { authClient } from "@/lib/auth-client";
 import { Check, Zap } from "lucide-react";
-import React, { useState } from "react";
-
-const plans = [
-    {
-      name: 'Free',
-      description: 'Perfect for side projects and learning',
-      price: '$0',
-      interval: 'forever',
-      features: [
-        'Up to 3 projects',
-        '1GB storage',
-        'Basic analytics',
-        'Community support',
-      ],
-      priceId: '',
-      popular: false,
-    },
-    {
-      name: 'Pro',
-      description: 'For professional developers and small teams',
-      price: '$19',
-      interval: 'month',
-      features: [
-        'Unlimited projects',
-        '10GB storage',
-        'Advanced analytics',
-        'Priority support',
-        'Custom domains',
-        'Team collaboration',
-      ],
-      priceId: 'price_pro_monthly',
-      popular: true,
-    },
-    {
-      name: 'Enterprise',
-      description: 'For large teams and organizations',
-      price: '$99',
-      interval: 'month',
-      features: [
-        'Everything in Pro',
-        'Unlimited storage',
-        'Custom analytics',
-        'Dedicated support',
-        'SLA guarantee',
-        'Custom integrations',
-        'Advanced security',
-      ],
-      priceId: 'price_enterprise_monthly',
-      popular: false,
-    },
-  ];
+import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { plans } from "@/constants/dashboard/billing";
 
 const page = () => {
     const [loading, setLoading] = useState<string | null>(null);
+    const [activePlan, setActivePlan] = useState<any | null>(null);
 
-    const handleSubscribe = async (priceId: string) => {
-      if (!priceId) return;
-      setLoading(priceId);
-      
-      try {
-        // Here you would typically:
-        // 1. Call your backend to create a Stripe Checkout Session
-        // 2. Redirect to Stripe Checkout
-        // const response = await fetch('/api/create-checkout-session', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({ priceId }),
-        // });
-        // const { url } = await response.json();
-        // window.location.href = url;
-        
-        console.log('Subscribing to plan with price ID:', priceId);
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setLoading(null);
-      }
+    const handleSubscribe = async (authPlanName: string) => {
+        if (!authPlanName) return;
+        setLoading(authPlanName);
+        try {
+            const { error } = await authClient.subscription.upgrade({
+                    plan: authPlanName,
+                    successUrl: "/dashboard",
+                    cancelUrl: "/dashboard/billing",
+                    returnUrl: "/dashboard/billing",
+                });
+            if (error) {
+                toast.error(error.message);
+            } else {
+                toast.success("You have successfully subscribed to the Pro plan");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        } finally {
+            setLoading(null);
+        }
     };
+
+    const handleCancelSubscription = async () => {
+        try {
+            const { error } = await authClient.subscription.cancel({
+                returnUrl: "/dashboard/billing"
+            });
+            if (error) {
+                toast.error(error.message);
+            } else {
+                toast.success("Your subscription has been cancelled");
+                setActivePlan(null);
+            }
+        } catch (error) {
+            console.error("Error cancelling subscription:", error);
+            toast.error("Failed to cancel subscription");
+        }
+    };
+
+    useEffect(() => {
+        const fetchSubscriptions = async () => {
+            const { data: subscriptions } = await authClient.subscription.list();
+            if (subscriptions && subscriptions.length > 0) {
+                const activeSubscription = subscriptions.find(
+                    (sub) => sub.status === "active"
+                );
+                if (activeSubscription) {
+                    setActivePlan(activeSubscription);
+                }
+            }
+        };
+        fetchSubscriptions();
+    }, []);
+
     return (
         <div className="space-y-6 animate-in fade-in duration-500">
             <div className="space-y-1">
@@ -142,43 +127,55 @@ const page = () => {
                             </ul>
                         </CardContent>
                         <CardFooter>
-                            <Button
-                                className="w-full"
-                                variant={plan.popular ? "default" : "outline"}
-                                onClick={() => handleSubscribe(plan.priceId)}
-                                disabled={
-                                    loading === plan.priceId || !plan.priceId
-                                }
-                            >
-                                {loading === plan.priceId ? (
-                                    <div className="flex items-center gap-2">
-                                        <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-                                        Processing...
-                                    </div>
-                                ) : (
-                                    <div className="flex items-center gap-2">
-                                        <Zap className="h-4 w-4" />
-                                        {plan.priceId
-                                            ? "Subscribe"
-                                            : "Current Plan"}
-                                    </div>
-                                )}
-                            </Button>
+                            {plan.name !== "Free" ? (
+                                <Button
+                                    className="w-full"
+                                    variant={
+                                        plan.popular ? "default" : "outline"
+                                    }
+                                    onClick={() => handleSubscribe(plan.authPlanName)}
+                                    disabled={
+                                        loading === plan.name ||
+                                        activePlan
+                                    }
+                                >
+                                    {loading === plan.name ? (
+                                        <div className="flex items-center gap-2">
+                                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                                            Processing...
+                                        </div>
+                                    ) : (
+                                        <div className="flex items-center gap-2">
+                                            <Zap className="h-4 w-4" />
+                                            {activePlan?.plan === plan.authPlanName
+                                                ? "Current Plan"
+                                                : "Subscribe"}
+                                        </div>
+                                    )}
+                                </Button>
+                            ) : null}
                         </CardFooter>
                     </Card>
                 ))}
             </div>
 
-            <Card>
-                <CardHeader>
-                    <CardTitle>Billing History</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="text-sm text-muted-foreground">
-                        No billing history available.
-                    </div>
-                </CardContent>
-            </Card>
+            {activePlan && activePlan.plan !== "free" && (
+                <Card>
+                    <CardHeader>
+                        <CardTitle>Billing Details</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="flex flex-col gap-4">
+                            <div>Status: <Badge variant="default">{activePlan?.status}</Badge></div>
+                            <div>Plan: <Badge variant="secondary">{activePlan?.plan}</Badge></div>
+                            <div>Next Billing Date: <Badge variant="secondary">{activePlan?.periodEnd ? new Date(activePlan?.periodEnd).toLocaleDateString() : "N/A"}</Badge></div>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-end">
+                        <Button variant="destructive" onClick={handleCancelSubscription}>Cancel Subscription</Button>
+                    </CardFooter>
+                </Card>
+            )}
         </div>
     );
 };
