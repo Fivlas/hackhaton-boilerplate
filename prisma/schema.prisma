@@ -83,13 +83,11 @@ model Subscription {
   referenceId          String
   stripeCustomerId     String?
   stripeSubscriptionId String?
-  status               String
+  status               String?
   periodStart          DateTime?
   periodEnd            DateTime?
   cancelAtPeriodEnd    Boolean?
   seats                Int?
-  trialStart           DateTime?
-  trialEnd             DateTime?
 
   @@map("subscription")
 }
