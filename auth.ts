@@ -4,8 +4,13 @@ import { PrismaClient } from "@prisma/client";
 import { sendMail } from "./lib/send-mail";
 import { nextCookies } from "better-auth/next-js";
 import { emailHarmony } from 'better-auth-harmony'
+import { stripe } from "@better-auth/stripe"
+import { customSession } from "better-auth/plugins"
+import Stripe from "stripe"
 
 const prisma = new PrismaClient();
+const stripeClient = new Stripe(process.env.STRIPE_SECRET_KEY!)
+
 export const auth = betterAuth({
     database: prismaAdapter(prisma, {
         provider: "postgresql",
@@ -13,6 +18,22 @@ export const auth = betterAuth({
     plugins: [
         nextCookies(),
         emailHarmony(),
+        stripe({
+            stripeClient,
+            stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET!,
+            createCustomerOnSignUp: true,
+            // onCustomerCreate: async ({ customer, stripeCustomer, user }, request) => {
+            //     console.log(`Customer ${customer.id} created for user ${user.id}`);
+            // },
+            // getCustomerCreateParams: async ({ user, session }, request) => {
+            //     // Customize the Stripe customer creation parameters
+            //     return {
+            //         metadata: {
+            //             referralSource: user.metadata?.referralSource
+            //         }
+            //     };
+            // }
+        })
     ],
     session: {
         cookieCache: {

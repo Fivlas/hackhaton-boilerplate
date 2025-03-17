@@ -26,8 +26,10 @@ model User {
 
   normalizedEmail String?
 
-  @@map("user")
+  stripeCustomerId String?
+
   @@unique([normalizedEmail])
+  @@map("user")
 }
 
 model Session {
@@ -73,4 +75,21 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
+}
+
+model Subscription {
+  id                   String    @id
+  plan                 String
+  referenceId          String
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  status               String
+  periodStart          DateTime?
+  periodEnd            DateTime?
+  cancelAtPeriodEnd    Boolean?
+  seats                Int?
+  trialStart           DateTime?
+  trialEnd             DateTime?
+
+  @@map("subscription")
 }
