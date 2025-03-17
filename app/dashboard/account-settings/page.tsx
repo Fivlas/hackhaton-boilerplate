@@ -2,7 +2,6 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -21,29 +20,48 @@ import {
     FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { authClient } from "@/lib/auth-client";
 import { accountSettingsSchema, AccountSettingsValues } from "@/schema/dashboard/AccountSettingsSchema";
 import { UserCircle2 } from "lucide-react";
 import React from "react";
+import { useSession } from "@/hooks/useSession";
 
 const page = () => {
+    const session = useSession();
     const form = useForm<AccountSettingsValues>({
         resolver: zodResolver(accountSettingsSchema),
         defaultValues: {
             avatar: "",
             currentPassword: "",
-            email: "filip.skoczylas777007@gmail.com",
-            name: "Fivlas",
+            email: session?.email,
+            name: session?.name,
             newPassword: "",
             repeatNewPassword: "",
         },
     });
 
     const onSubmit = async (data: AccountSettingsValues) => {
-        console.log("Form Data:", data);
-        // Handle form submission logic here
+        if (data.currentPassword && data.newPassword) {
+            await authClient.changePassword({
+                newPassword: data.newPassword,
+                currentPassword: data.currentPassword,
+                revokeOtherSessions: true,
+            });
+        }
+
+        if (data.name !== session?.name) {
+            await authClient.updateUser({
+                name: data.name
+            })
+        }
+
+        if (data.email !== session?.email) {
+            await authClient.changeEmail({
+                newEmail: data.email as string,
+                callbackURL: "/dashboard",
+            })
+        }
     };
 
     return (
@@ -74,7 +92,7 @@ const page = () => {
                                             <FormItem>
                                                 <FormLabel>Username</FormLabel>
                                                 <FormControl>
-                                                    <Input placeholder="John" {...field} />
+                                                    <Input placeholder="John" {...field} autoComplete="username"/>
                                                 </FormControl>
                                                 <FormMessage />
                                             </FormItem>
@@ -111,7 +129,7 @@ const page = () => {
                                         <FormItem>
                                             <FormLabel>Current Password</FormLabel>
                                             <FormControl>
-                                                <Input type="password" {...field} />
+                                                <Input type="password" {...field} name="current-password" autoComplete="current-password"/>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>
@@ -124,7 +142,7 @@ const page = () => {
                                         <FormItem>
                                             <FormLabel>New Password</FormLabel>
                                             <FormControl>
-                                                <Input type="password" {...field} />
+                                                <Input type="password" {...field} name="new-password" autoComplete="new-password"/>
                                             </FormControl>
                                             <FormMessage />
                                         </FormItem>

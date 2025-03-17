@@ -25,6 +25,7 @@ import { PasswordInput } from "@/components/ui/passwordInput";
 import LoadingButton from "@/components/ui/LoadingButton";
 import { useTransition } from "react";
 import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
 
 export function RegisterForm({
     className,
@@ -48,6 +49,29 @@ export function RegisterForm({
                 email: values.email,
                 name: values.username,
                 password: values.password
+            }, 
+            {
+                onSuccess: () => {
+                    toast.success("We sent you email veryfiaction mail");
+                },
+                onError: (ctx) => {
+                    if (ctx.error.status === 422) {
+                        if (ctx.error.message === "User already exists") {
+                            form.setError("email", {
+                                type: "manual",
+                                message: "Podany adres email już istnieje"
+                            })
+                        }
+
+                        if (ctx.error.message === "Failed to create user") {
+                            form.setError("username", {
+                                type: "manual",
+                                message: "Podana nazwa użytkownika już istnieje"
+                            })
+                        }
+                    }
+
+                }
             });
         })
     }

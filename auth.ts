@@ -20,6 +20,7 @@ export const auth = betterAuth({
     },
     emailAndPassword: {
         enabled: true,
+        requireEmailVerification: true,
     },
     emailVerification: {
         sendOnSignUp: true,
@@ -38,5 +39,23 @@ export const auth = betterAuth({
                 text: `Click the link to reset your password: ${url}`,
             });
         },
+    },
+    user: {
+        changeEmail: {
+            enabled: true,
+            sendChangeEmailVerification: async ({ user, newEmail, url, token }, request) => {
+                await sendMail({
+                    sendTo: user.email,
+                    subject: 'Approve email change',
+                    text: `Click the link to approve the change: ${url}`
+                })
+            }
+        }
+    },
+    account: {
+        accountLinking: {
+            enabled: true,
+            trustedProviders: ["google", "facebook"]
+        }
     },
 });

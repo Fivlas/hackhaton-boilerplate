@@ -50,6 +50,7 @@ export function LoginForm({
                 email:values.email,
                 password: values.password,
                 rememberMe: values.rememberMe,
+                callbackURL: "/dashboard"
             }, {
                 onError: (ctx) => {
                     if(ctx.error.status === 403) {
@@ -59,11 +60,23 @@ export function LoginForm({
                                 onClick: async () => {
                                     await authClient.sendVerificationEmail({
                                         email: values.email,
-                                        callbackURL: "/"
+                                        callbackURL: "/dashboard"
                                     })
                                 },
                             },
                         })
+                    }
+
+                    if (ctx.error.status === 401) {
+                        form.setError("email", {
+                            type: "manual",
+                            message: "Nieprawidłowy adres email lub hasło",
+                        });
+
+                        form.setError("password", {
+                            type: "manual",
+                            message: "Nieprawidłowy adres email lub hasło",
+                        });
                     }
                 }
             });

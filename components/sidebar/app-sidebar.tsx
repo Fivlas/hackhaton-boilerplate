@@ -1,5 +1,3 @@
-"use client"
-
 import * as React from "react"
 import { Command } from "lucide-react"
 
@@ -22,15 +20,6 @@ import { SidebarData } from "@/constants/dashboard/sidebar"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  // const session = useSession()!;
-
-  // const navUser = {
-    // name: session.name,
-    // email: session.email,
-    // avatar: session.image as string,
-  // }
-
-
   return (
     <Sidebar variant="inset" {...props}>
       <SidebarHeader>
@@ -56,8 +45,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavSecondary items={SidebarData.navSecondary} className="mt-auto" />
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={SidebarData.user} />
-        {/* <NavUser user={navUser} /> */}
+        <NavUser/>
       </SidebarFooter>
     </Sidebar>
   )
