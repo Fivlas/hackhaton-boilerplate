@@ -9,7 +9,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { authClient } from "@/lib/auth-client";
-import { Check, Zap } from "lucide-react";
+import { Check, CreditCard, Zap } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { plans } from "@/constants/dashboard/billing";
@@ -23,14 +23,14 @@ const page = () => {
         setLoading(authPlanName);
         try {
             const { error } = await authClient.subscription.upgrade({
-                    plan: authPlanName,
-                    successUrl: "/dashboard",
-                    cancelUrl: "/dashboard/billing",
-                    returnUrl: "/dashboard/billing",
-                });
+                plan: authPlanName,
+                successUrl: "/dashboard",
+                cancelUrl: "/dashboard/billing",
+                returnUrl: "/dashboard/billing",
+            });
             if (error) {
                 return toast.error(error.message);
-            } 
+            }
             toast.success("You have successfully subscribed to the Pro plan");
         } catch (error) {
             console.error("Error:", error);
@@ -71,71 +71,96 @@ const page = () => {
     }, []);
 
     return (
-        <div className="space-y-6 animate-in fade-in duration-500">
-            <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">Billing</h2>
-                <p className="text-muted-foreground">
-                    Manage your subscription and billing details
+        <div className="container mx-auto px-4 py-8 max-w-7xl animate-in fade-in duration-500">
+            <div className="text-center mb-12">
+                <h1 className="text-4xl font-extrabold tracking-tight mb-3">Choose Your Plan</h1>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                    Select the perfect plan for your needs. Upgrade or downgrade at any time.
                 </p>
             </div>
 
-            <div className="grid gap-6 lg:grid-cols-3">
+            {activePlan && activePlan.plan !== "free" && (
+                <Card className="mb-12 bg-gradient-to-r from-primary/10 to-primary/5">
+                    <CardHeader>
+                        <div className="flex items-center gap-3">
+                            <CreditCard className="h-6 w-6 text-primary" />
+                            <CardTitle>Current Subscription</CardTitle>
+                        </div>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid md:grid-cols-3 gap-6">
+                            <div className="flex flex-col gap-2">
+                                <span className="text-sm text-muted-foreground">Status</span>
+                                <Badge variant="default" className="w-fit">{activePlan?.status}</Badge>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-sm text-muted-foreground">Current Plan</span>
+                                <Badge variant="secondary" className="w-fit capitalize">{activePlan?.plan}</Badge>
+                            </div>
+                            <div className="flex flex-col gap-2">
+                                <span className="text-sm text-muted-foreground">Next Billing</span>
+                                <Badge variant="secondary" className="w-fit">
+                                    {activePlan?.periodEnd ? new Date(activePlan?.periodEnd).toLocaleDateString() : "N/A"}
+                                </Badge>
+                            </div>
+                        </div>
+                    </CardContent>
+                    <CardFooter className="flex justify-end">
+                        <Button variant="destructive" onClick={handleCancelSubscription}>
+                            Cancel Subscription
+                        </Button>
+                    </CardFooter>
+                </Card>
+            )}
+
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 {plans.map((plan) => (
                     <Card
                         key={plan.name}
-                        className={`relative flex flex-col ${
-                            plan.popular ? "border-primary shadow-lg" : ""
+                        className={`relative flex flex-col transform transition-all duration-300 hover:scale-105 ${
+                            plan.popular ? "border-primary shadow-xl ring-2 ring-primary/20" : "hover:shadow-lg"
                         }`}
                     >
                         {plan.popular && (
                             <Badge
-                                className="absolute -top-2 -right-2 px-3 py-1"
+                                className="absolute -top-3 left-1/2 -translate-x-1/2 px-4 py-1"
                                 variant="default"
                             >
-                                Popular
+                                Most Popular
                             </Badge>
                         )}
-                        <CardHeader>
-                            <CardTitle>
-                                <div className="flex items-center justify-between">
-                                    <span>{plan.name}</span>
-                                    <Badge
-                                        variant="secondary"
-                                        className="text-sm"
-                                    >
-                                        {plan.price}/{plan.interval}
-                                    </Badge>
+                        <CardHeader className="pb-8">
+                            <CardTitle className="flex flex-col gap-2">
+                                <span className="text-2xl font-bold">{plan.name}</span>
+                                <div className="flex items-baseline gap-1">
+                                    <span className="text-3xl font-bold">{plan.price}</span>
+                                    <span className="text-muted-foreground">/{plan.interval}</span>
                                 </div>
                             </CardTitle>
-                            <p className="text-sm text-muted-foreground">
+                            <p className="text-sm text-muted-foreground mt-2">
                                 {plan.description}
                             </p>
                         </CardHeader>
                         <CardContent className="flex-1">
-                            <ul className="space-y-2 text-sm">
+                            <ul className="space-y-3">
                                 {plan.features.map((feature) => (
                                     <li
                                         key={feature}
-                                        className="flex items-center gap-2"
+                                        className="flex items-center gap-3 text-sm"
                                     >
-                                        <Check className="h-4 w-4 text-primary" />
-                                        {feature}
+                                        <Check className="h-5 w-5 text-primary shrink-0" />
+                                        <span>{feature}</span>
                                     </li>
                                 ))}
                             </ul>
                         </CardContent>
-                        <CardFooter>
+                        <CardFooter className="pt-6">
                             {plan.name !== "Free" ? (
                                 <Button
-                                    className="w-full"
-                                    variant={
-                                        plan.popular ? "default" : "outline"
-                                    }
+                                    className="w-full py-6 text-lg"
+                                    variant={plan.popular ? "default" : "outline"}
                                     onClick={() => handleSubscribe(plan.authPlanName)}
-                                    disabled={
-                                        loading === plan.name ||
-                                        activePlan
-                                    }
+                                    disabled={loading === plan.name || activePlan?.plan === plan.authPlanName}
                                 >
                                     {loading === plan.name ? (
                                         <div className="flex items-center gap-2">
@@ -144,36 +169,26 @@ const page = () => {
                                         </div>
                                     ) : (
                                         <div className="flex items-center gap-2">
-                                            <Zap className="h-4 w-4" />
+                                            <Zap className="h-5 w-5" />
                                             {activePlan?.plan === plan.authPlanName
                                                 ? "Current Plan"
-                                                : "Subscribe"}
+                                                : "Subscribe Now"}
                                         </div>
                                     )}
                                 </Button>
-                            ) : null}
+                            ) : (
+                                <Button
+                                    className="w-full py-6 text-lg"
+                                    variant="outline"
+                                    disabled
+                                >
+                                    Free Plan
+                                </Button>
+                            )}
                         </CardFooter>
                     </Card>
                 ))}
             </div>
-
-            {activePlan && activePlan.plan !== "free" && (
-                <Card>
-                    <CardHeader>
-                        <CardTitle>Billing Details</CardTitle>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                        <div className="flex flex-col gap-4">
-                            <div>Status: <Badge variant="default">{activePlan?.status}</Badge></div>
-                            <div>Plan: <Badge variant="secondary">{activePlan?.plan}</Badge></div>
-                            <div>Next Billing Date: <Badge variant="secondary">{activePlan?.periodEnd ? new Date(activePlan?.periodEnd).toLocaleDateString() : "N/A"}</Badge></div>
-                        </div>
-                    </CardContent>
-                    <CardFooter className="flex justify-end">
-                        <Button variant="destructive" onClick={handleCancelSubscription}>Cancel Subscription</Button>
-                    </CardFooter>
-                </Card>
-            )}
         </div>
     );
 };

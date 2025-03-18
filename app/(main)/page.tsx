@@ -1,4 +1,5 @@
 import { Pricing } from "@/components/blocks/pricing";
+import { BentoGridBlock } from "@/components/landing/Bento";
 import { Hero } from "@/components/landing/Hero";
 import { CTA } from "@/components/ui/call-to-action";
 
@@ -66,6 +67,7 @@ export default function Home() {
       <div className="container mx-auto">
         <Hero/>
         <Pricing plans={demoPlans} title="Pricing" description="desc"/>
+        <BentoGridBlock />
         <CTA />
       </div>
   );

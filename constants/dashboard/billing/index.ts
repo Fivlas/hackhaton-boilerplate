@@ -2,7 +2,7 @@ export const plans = [
     {
         name: "Free",
         description: "Perfect for side projects and learning",
-        price: "$0",
+        price: "0 zł",
         interval: "forever",
         features: [
             "Up to 3 projects",
