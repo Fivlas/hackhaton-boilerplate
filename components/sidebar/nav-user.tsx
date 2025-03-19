@@ -100,7 +100,7 @@ export function NavUser() {
                   <BadgeCheck />
                   Account
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem className="cursor-pointer" onClick={() => router.push("/dashboard/billing")}>
                 <CreditCard />
                 Billing
               </DropdownMenuItem>

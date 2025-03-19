@@ -36,11 +36,11 @@ export const SidebarData = {
             url: "/dashboard/api-keys",
             icon: Key,
         },
-        {
-            title: "Billing",
-            url: "/dashboard/billing",
-            icon: CreditCard,
-        },
+        // {
+        //     title: "Billing",
+        //     url: "/dashboard/billing",
+        //     icon: CreditCard,
+        // },
         // {
         //     title: "Playground",
         //     url: "#",

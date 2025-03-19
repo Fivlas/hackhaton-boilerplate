@@ -31,6 +31,10 @@ const DEFAULT_THEMES = [
         value: "red",
     },
     {
+        name: "Violet",
+        value: "violet",
+    },
+    {
         name: "Amber",
         value: "amber",
     },
