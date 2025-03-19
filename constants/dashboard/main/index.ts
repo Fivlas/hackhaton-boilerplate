@@ -128,7 +128,8 @@ export const chartData = [
 ];
 
 export const chartConfig = {
-    title: "Analytics",
+    title: "Total Visitors",
+    description: "Total visitors for the last 3 months",
     series: [
         {
             key: "desktop",

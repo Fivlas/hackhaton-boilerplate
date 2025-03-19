@@ -1,7 +1,4 @@
 import {
-    BookOpen,
-    Bot,
-    CreditCard,
     Frame,
     Key,
     LayoutDashboard,

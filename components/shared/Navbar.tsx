@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "motion/react";
 import Link from "next/link";
 import { Button } from "../ui/button";
 import { Globe, Menu, MessageSquare, Shield, X, Zap } from "lucide-react";
+import Image from "next/image";
 
 const menuItems = [
     {
@@ -36,7 +37,7 @@ const Navbar = () => {
         <div className="flex justify-between w-full mx-auto md:px-12 md:py-6 px-3 py-5">
             <div className="flex gap-32">
                 <Link href={"/"} className="flex rounded-4xl items-center">
-                    LOGO
+                    <Image src={"/logo.svg"} alt="logo" width={64} height={64} />
                 </Link>
                 <nav className="relative md:flex items-center hidden">
                     <ul className="flex items-start list-none relative">

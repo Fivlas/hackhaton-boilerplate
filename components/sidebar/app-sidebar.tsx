@@ -14,9 +14,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { useSession } from "@/hooks/useSession"
 import Link from "next/link"
 import { SidebarData } from "@/constants/dashboard/sidebar"
+import Image from "next/image"
 
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -27,12 +27,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link href="/">
-                <div className="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg">
-                  <Command className="size-4" />
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg">
+                  <Image src={"/logo.svg"} alt="logo" width={32} height={32} />
                 </div>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">Acme Inc</span>
-                  <span className="truncate text-xs">Enterprise</span>
+                  <span className="truncate font-medium">Hackhaton Boilerplate</span>
+                  <span className="truncate text-xs">v1.0.0</span>
                 </div>
               </Link>
             </SidebarMenuButton>

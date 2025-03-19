@@ -43,6 +43,7 @@ interface ChartSeriesConfig {
 
 interface ChartConfigProps {
     title: string;
+    description: string;
     series: ChartSeriesConfig[];
 }
 
@@ -68,8 +69,8 @@ const DEFAULT_TIME_RANGES = [
 export function ChartAreaInteractive({
     data,
     config,
-    title = "Analytics",
-    description = "Total for the last 3 months",
+    title = config.title,
+    description = config.description,
     height = 250,
     timeRanges = DEFAULT_TIME_RANGES,
 }: ChartAreaProps) {

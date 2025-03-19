@@ -1,4 +1,5 @@
 "use client"
+import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,12 +39,7 @@ const page = () => {
 
     return (
         <div className="space-y-6">
-            <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">API Keys</h2>
-                <p className="text-muted-foreground">
-                    Manage your API keys for development and production
-                </p>
-            </div>
+            <DashboardPageHeader title="API Keys" description="Manage your API keys for development and production" />
 
             <Card>
                 <CardHeader>

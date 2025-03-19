@@ -26,6 +26,7 @@ import { accountSettingsSchema, AccountSettingsValues } from "@/schema/dashboard
 import { UserCircle2 } from "lucide-react";
 import React from "react";
 import { useSession } from "@/hooks/useSession";
+import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
 
 const page = () => {
     const session = useSession();
@@ -66,6 +67,7 @@ const page = () => {
 
     return (
         <div className="flex flex-col space-y-6">
+            <DashboardPageHeader title="Account Settings" description="Manage your account settings" />
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
