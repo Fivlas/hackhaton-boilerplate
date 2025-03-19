@@ -9,7 +9,6 @@ import {
     PieChart,
     Send,
     Settings2,
-    SquareTerminal,
     Users,
     Map as MapIcon
 } from "lucide-react";

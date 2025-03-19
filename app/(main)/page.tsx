@@ -1,4 +1,4 @@
-import { Pricing } from "@/components/blocks/pricing";
+import { Pricing } from "@/components/landing/pricing";
 import { BentoGridBlock } from "@/components/landing/Bento";
 import { Hero } from "@/components/landing/Hero";
 import { CTA } from "@/components/ui/call-to-action";

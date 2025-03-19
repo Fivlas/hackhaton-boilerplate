@@ -1,5 +1,6 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
+import { ThemeSelector } from "@/components/shared/ThemeSelector";
 import {
     Card,
     CardContent,
@@ -32,12 +33,7 @@ const page = () => {
     }
     return (
         <div className="flex flex-col space-y-6">
-            <div className="space-y-1">
-                <h2 className="text-2xl font-bold tracking-tight">API Keys</h2>
-                <p className="text-muted-foreground">
-                    Manage your API keys for development and production
-                </p>
-            </div>
+            <DashboardPageHeader title="Settings" description="Manage your settings" />
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <Card>
                     <CardHeader>
@@ -148,6 +144,7 @@ const page = () => {
                                 </SelectContent>
                             </Select>
                         </div>
+                        <ThemeSelector/>
                     </CardContent>
                 </Card>
             </div>
