@@ -118,11 +118,13 @@ export const SidebarData = {
             title: "Support",
             url: "#",
             icon: LifeBuoy,
+            isSupport: true,
         },
         {
             title: "Feedback",
             url: "#",
             icon: Send,
+            isFeedback: true,
         },
     ],
     projects: [

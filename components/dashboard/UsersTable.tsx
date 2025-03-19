@@ -31,7 +31,7 @@ const UsersTable = ({ users }: { users: UserTableProps[] }) => {
             <div className="flex justify-between items-center">
                 <div className="relative w-64">
                     <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input placeholder="Search users..." className="pl-8" />
+                    <Input placeholder="Search users..." className="pl-8 bg-input" />
                 </div>
                 <Button>
                     <Plus className="mr-2 h-4 w-4" />
@@ -39,7 +39,7 @@ const UsersTable = ({ users }: { users: UserTableProps[] }) => {
                 </Button>
             </div>
 
-            <div className="rounded-md border">
+            <div className="rounded-md border bg-card">
                 <Table>
                     <TableHeader>
                         <TableRow>
