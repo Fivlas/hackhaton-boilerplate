@@ -181,8 +181,8 @@ body {
   }
 }
 
-.theme-green,
-.theme-green-scaled {
+.theme-red,
+.theme-red-scaled {
   --primary: var(--color-red-600);
   --primary-foreground: var(--color-red-50);
 
