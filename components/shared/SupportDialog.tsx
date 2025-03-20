@@ -105,6 +105,9 @@ export function SupportDialog({ children }: { children: React.ReactNode }) {
                                 <UploadDropzone
                                     className="upload-button"
                                     endpoint="imageUploader"
+                                    appearance={{
+                                        container: "border dark:!border-white !border-black w-full border-dashed"
+                                    }}
                                     onClientUploadComplete={(res) => {
                                         setUrlResponse(res.map((file) => file.url).join("\n"));
                                     }}
