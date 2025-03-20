@@ -2,6 +2,10 @@
 
 @plugin "tailwindcss-animate";
 
+@import "uploadthing/tw/v4";
+@source "../node_modules/@uploadthing/react/dist";
+
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -247,4 +251,12 @@ body {
   [data-slot="toggle-group-item"] {
     @apply !rounded-none !shadow-none;
   }
+}
+
+.upload-button > *[data-ut-element="button"][data-state="uploading"]::after {
+  background-color: var(--primary);
+}
+
+.upload-button > *[data-ut-element="button"][data-state="ready"]::after {
+  background-color: var(--primary);
 }

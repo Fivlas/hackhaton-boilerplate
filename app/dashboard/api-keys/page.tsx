@@ -1,7 +1,6 @@
 "use client"
 import CardWithActions from "@/components/dashboard/CardWithActions";
 import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
     Card,
@@ -11,24 +10,10 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, Key, Plus, Trash } from "lucide-react";
+import { API_KEYS } from "@/constants/dashboard/api-keys";
+import { Copy, Key, Plus } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from 'sonner';
-
-const API_KEYS = [
-    {
-        name: 'Development',
-        key: 'dev_sk_1234567890abcdef',
-        created: '2024-01-15',
-        lastUsed: '2024-03-20',
-    },
-    {
-        name: 'Production',
-        key: 'prod_sk_0987654321zyxwvu',
-        created: '2024-02-01',
-        lastUsed: '2024-03-21',
-    },
-];
 
 const page = () => {
     const [newKeyName, setNewKeyName] = useState('');
