@@ -1,4 +1,5 @@
 "use client"
+import CardWithActions from "@/components/dashboard/CardWithActions";
 import DashboardPageHeader from "@/components/dashboard/DashboardPageHeader";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,7 @@ import {
     CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Copy, Key, Plus } from "lucide-react";
+import { Copy, Key, Plus, Trash } from "lucide-react";
 import React, { useState } from "react";
 import { toast } from 'sonner';
 
@@ -65,42 +66,18 @@ const page = () => {
 
             <div className="space-y-4">
                 {API_KEYS.map((apiKey) => (
-                    <Card key={apiKey.key}>
-                        <CardContent>
-                            <div className="flex items-center justify-between">
-                                <div className="space-y-1">
-                                    <div className="flex items-center gap-2">
-                                        <h3 className="font-semibold">
-                                            {apiKey.name}
-                                        </h3>
-                                        <Badge variant="outline">
-                                            <Key className="mr-1 h-3 w-3" />
-                                            {apiKey.key.slice(0, 8)}...
-                                        </Badge>
-                                    </div>
-                                    <div className="text-sm text-muted-foreground">
-                                        Created on {apiKey.created} • Last used{" "}
-                                        {apiKey.lastUsed}
-                                    </div>
-                                </div>
-                                <div className="flex gap-2 flex-col md:flex-row">
-                                    <Button
-                                        variant="outline"
-                                        size="sm"
-                                        onClick={() =>
-                                            copyToClipboard(apiKey.key)
-                                        }
-                                    >
-                                        <Copy className="mr-2 h-4 w-4" />
-                                        Copy
-                                    </Button>
-                                    <Button variant="destructive" size="sm">
-                                        Revoke
-                                    </Button>
-                                </div>
-                            </div>
-                        </CardContent>
-                    </Card>
+                    <CardWithActions
+                        key={apiKey.key}
+                        name={apiKey.name}
+                        description={`Created on ${apiKey.created} • Last used ${apiKey.lastUsed}`}
+                        badgeValue={apiKey.key.slice(0, 8)}
+                        BadgeIcon={Key}
+                        PrimaryButtonText="Revoke"
+                        SecondaryButtonText="Copy"
+                        SecondaryButtonIcon={Copy}
+                        onClickPrimaryButton={() => {}}
+                        onClickSecondaryButton={() => copyToClipboard(apiKey.key)}
+                    />
                 ))}
             </div>
         </div>
