@@ -65,7 +65,7 @@ UPLOADTHING_TOKEN=
 UPLOADTHING_SECRET=
 ```
 
-<p>5. Run Project StripeHook</p>
+<p>5. Run Stripe webhook</p>
 
 ```bash
 stripe listen --forward-to localhost:3000/api/auth/stripe/webhook
