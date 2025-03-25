@@ -21,7 +21,7 @@ comprehensive foundation for building scalable web applications quickly and effi
 <h2>🛠️ Installation Steps:</h2>
 <p>This project requires the following dependencies:</p>
 
-*   **Runtime:** nodeJS
+*   **Runtime:** NodeJS
 
 
 <p>1. Clone the repository:</p>
@@ -54,7 +54,7 @@ BETTER_AUTH_URL=
 SMTP_SERVER_USERNAME=
 SMTP_SERVER_PASSWORD=
 SMTP_SERVER_HOST=
-#Defail reciver of email
+#Default email reciver
 SITE_MAIL_RECIEVER=
 
 STRIPE_SECRET_KEY=
@@ -64,14 +64,25 @@ STRIPE_WEBHOOK_SECRET=
 UPLOADTHING_TOKEN=
 UPLOADTHING_SECRET=
 ```
+<p>5. Generate Prisma Scheme</p>
 
-<p>5. Run Stripe webhook</p>
+```bash
+npx prisma generate
+```
+
+<p>6. Push Prisma Scheme to DB</p>
+
+```bash
+npx prisma db push
+```
+
+<p>7. Run Stripe webhook</p>
 
 ```bash
 stripe listen --forward-to localhost:3000/api/auth/stripe/webhook
 ```
 
-<p>6. Run Project</p>
+<p>8. Run Project</p>
 
 ```bash
 npm run dev
