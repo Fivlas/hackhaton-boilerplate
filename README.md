@@ -27,7 +27,7 @@ comprehensive foundation for building scalable web applications quickly and effi
 <p>1. Clone the repository:</p>
 
 ```bash
-git clone
+git clone https://github.com/Fivlas/hackhaton-boilerplate.git
 ```
 
 <p>2. Navigate to the project directory:</p>
